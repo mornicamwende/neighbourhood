@@ -10,11 +10,11 @@ def home(request):
     context = {
         'posts': post.objects.all()
     }
-    return render(request, 'neighbourapp/home.html', context)
+    return render(request, 'neighbourapp/index.html', context)
 
 class PostListView(ListView):
     model = post
-    template_name = 'neighbourapp/home.html' #<app>/<model> <viewtype>.html
+    template_name = 'neighbourapp/index.html' #<app>/<model> <viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
 
@@ -58,66 +58,66 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def index(request):
     mitaa_zote = Home.objects.all()
-    return render(request, 'neighbourapp/index.html', {'mitaa_zote':mitaa_zote})
+    return render(request, 'neighbourapp/index.html', {'all_hoods':mitaa_zote})
 
-def add_mtaa(request):
+def add_hood(request):
     if request.method == 'POST':
         form = HomeForm(request.POST, request.FILES)
         if form.is_valid():
-            mtaa = form.save(commit=False)
-            mtaa.admin = request.user.profile
-            mtaa.save()
+            hood = form.save(commit=False)
+            hood.admin = request.user.profile
+            hood.save()
             return redirect('index')
     else:
         form = HomeForm()
-    return render(request, 'create_mtaa.html', {'form': form})
+    return render(request, 'create_hood.html', {'form': form})
 
 @login_required(login_url='login')
 def home(request):
-    mitaa_zote = Home.objects.all()
-    mitaa_zote = mitaa_zote[::-1]
+    hoods = Home.objects.all()
+    hoods = hoods[::-1]
     params = {
-        'mitaa_zote': mitaa_zote,
+        'hoods': hoods,
     }
-    return render(request, 'mitaa_zote.html', params)
+    return render(request, 'all_hoods.html', params)
 
 
-def create_post(request, mtaa_id):
-    mtaa = Home.objects.get(id=mtaa_id)
+def create_post(request, hood_id):
+    hood = Home.objects.get(id=hood_id)
     if request.method == 'POST':
         form = postForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.mtaa = mtaa
+            post.hood = hood
             post.user = request.user
             post.save()
-            return redirect('mtaa', mtaa.id)
+            return redirect('hood', hood.id)
     else:
         form = postForm()
     return render(request, 'create_post.html', {'form': form})
 
 
 
-def mtaa(request, mtaa_id):
-    mtaa = Home.objects.get(id=mtaa_id)
-    business = Business.objects.filter(id=mtaa_id)
-    posts = post.objects.filter(id=mtaa_id)
+def hood(request, hood_id):
+    hood = Home.objects.get(id=hood_id)
+    business = Business.objects.filter(id=hood_id)
+    posts = post.objects.filter(id=hood_id)
     if request.method == 'POST':
         form = BusinessForm(request.POST)
         if form.is_valid():
             b_form = form.save(commit=False)
-            b_form.Home = mtaa
+            b_form.Home = hood
             b_form.user = request.user
             b_form.save()
-            return redirect('mtaa', mtaa.id)
+            return redirect('hood', hood.id)
     else:
         form = BusinessForm()
 
     
     params = {
-        'mtaa': mtaa,
+        'hood': hood,
         'business': business,
         'form': form,
         'posts': posts
     }
-    return render(request, 'mtaa.html', params)
+    return render(request, 'hood.html', params)
