@@ -13,10 +13,10 @@ class HomeForm(forms.ModelForm):
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        exclude = ('user', 'neighbourhood')
+        exclude = ('user', 'home')
 
 
 class postForm(forms.ModelForm):
     class Meta:
         model = post
-        exclude = ('user', 'mtaa')
+        exclude = ('user', 'hood')
