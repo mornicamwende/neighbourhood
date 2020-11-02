@@ -1,0 +1,98 @@
+{% extends 'neighbourapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+
+    <h5 class="card-title">
+        Welcome to your hood,{{ hood.name }} in {{hood.location}}
+    </h5>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="col-md-6">
+                            <p class="card-text">
+                                <span class="text-info">Police Contact</span>&nbsp;<strong>{{hood.police}}</strong> |
+
+                                <span class="text-info">Hospital Contacts</span> <strong>{{hood.health}}</strong></p>
+
+                            <p class="card-text">Administrator:{{ hood.admin.user }}</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="card-text">{{hood.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+
+            <h5 class="D-block mx-auto">Businesses</h5>
+            <hr>
+            <div class="col-md-7">
+
+                {% for biz in business %}
+                <div class="card mb-4">
+                    <img src="{{ biz.business_image.url }}" alt="" class="card-header">
+                    <div class="card-body">
+                        <h5 class="card-title">{{biz.name}}
+                        </h5>
+                        <p class="card-text">{{biz.email}}</p>
+                        <p class="card-text">{{biz.description}}</p>
+                        <p class="card-text">Owner: <small class="text-muted">
+                                {{ biz.user.user.username|title }}</small></p>
+                    </div>
+                </div>
+                {% endfor %}
+                <hr>
+                <h2>Add your business to hood listings</h2>
+                <form action="" method="post">
+                    {% csrf_token%}
+                    {{form|crispy}}
+                    <button type="submit" class="btn btn-sm btn-success">Save Business</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger " data-dismiss="modal">
+                        Close
+                    </button>
+                </form>
+
+            </div>
+
+
+            <div class="col-md-1"></div>
+
+
+            <h5 class="D-block mx-auto">Posts</h5>
+            <div class="col-md-5">
+                <a href="{% url 'add_post' hood.id %}" class="btn btn-primary">ADD POST</a>
+                {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.post}}
+                        </h5>
+                        <p class="card-text">By: <small class="text-muted">
+                                {{ post.user|title }}</small> <small
+                                style="float:right"> Posted on:{{ post.date|date}}</small></p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+</div>
+
+
+
+
+{% endblock %}
