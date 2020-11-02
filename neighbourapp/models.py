@@ -15,7 +15,7 @@ class Home(models.Model):
     police = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name} mtaa'
+        return f'{self.name} hood'
 
     def create_home(self):
         self.save()
@@ -35,7 +35,7 @@ class post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts/')
-    mtaa = models.ForeignKey(Home, on_delete=models.CASCADE,)
+    hood = models.ForeignKey(Home, on_delete=models.CASCADE,)
 
 
     def __str__(self):
