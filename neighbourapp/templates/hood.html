@@ -8,7 +8,6 @@
         Welcome to your hood,{{ hood.name }} in {{hood.location}}
     </h5>
 
-
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-3">
@@ -21,17 +20,16 @@
                                 <span class="text-info">Hospital Contacts</span> <strong>{{hood.health}}</strong></p>
 
                             <p class="card-text">Administrator:{{ hood.admin.user }}</p>
-                        </div>
+                            <p class="card-text">posts{{hood.post}}</p>
 
+                        </div>
                         <div class="col-md-6">
-                            <p class="card-text">{{hood.description}}</p>
+                            <p class="card-text">Description{{hood.description}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-12">
 
             <h5 class="D-block mx-auto">Businesses</h5>
@@ -52,37 +50,38 @@
                 </div>
                 {% endfor %}
                 <hr>
-                <h2>Add your business to hood listings</h2>
+                <h2>Add your business to hood info</h2>
                 <form action="" method="post">
                     {% csrf_token%}
                     {{form|crispy}}
                     <button type="submit" class="btn btn-sm btn-success">Save Business</button>
-                    <button type="button" class="btn btn-sm btn-outline-danger " data-dismiss="modal">
-                        Close
-                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger " data-dismiss="modal">Close</button>
                 </form>
-
             </div>
 
 
-            <div class="col-md-1"></div>
-
-
+            <div class="col-md-12"></div>
             <h5 class="D-block mx-auto">Posts</h5>
-            <div class="col-md-5">
+            
                 <a href="{% url 'add_post' hood.id %}" class="btn btn-primary">ADD POST</a>
+                
                 {% for post in posts %}
+                <div class="col-md-4">
                 <div class="card mb-4">
+                <div class="card-header">
+                    <img src="{{post.image.url}}" class="card-img-top">
+                </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{post.post}}
+                        <h5 class="card-title">{{post.title}}
                         </h5>
                         <p class="card-text">By: <small class="text-muted">
-                                {{ post.user|title }}</small> <small
-                                style="float:right"> Posted on:{{ post.date|date}}</small></p>
+                                {{ post.author|title }}</small> <small
+                                style="float:right"> Posted on:{{ post.date_posted|date}}</small></p>
                     </div>
                 </div>
+                </div>
                 {% endfor %}
-            </div>
+            
         </div>
 
     </div>

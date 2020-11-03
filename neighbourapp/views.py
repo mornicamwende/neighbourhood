@@ -1,64 +1,63 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import HomeForm, postForm, BusinessForm
 from django.contrib.auth.decorators import login_required
 from .models import post, Home, Business
 
 
-def home(request):
-    context = {
-        'posts': post.objects.all()
-    }
-    return render(request, 'neighbourapp/index.html', context)
+# def home(request):
+#     context = {
+#         'posts': post.objects.all()
+#     }
+#     return render(request, 'neighbourapp/index.html', context)
 
-class PostListView(ListView):
-    model = post
-    template_name = 'neighbourapp/index.html' #<app>/<model> <viewtype>.html
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
+# class PostListView(ListView):
+#     model = post
+#     template_name = 'neighbourapp/index.html' #<app>/<model> <viewtype>.html
+#     context_object_name = 'posts'
+#     ordering = ['-date_posted']
 
-class PostDetailView(DetailView):
-    model = post
+# class PostDetailView(DetailView):
+#     model = post
    
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = post
-    fields = ['title', 'caption', 'image']
+# class PostCreateView(LoginRequiredMixin, CreateView):
+#     model = post
+#     fields = ['title', 'caption', 'image']
     
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = post
-    fields = ['title', 'caption']
+# class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+#     model = post
+#     fields = ['title', 'caption']
     
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
     
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        else:
-            return False
+#     def test_func(self):
+#         post = self.get_object()
+#         if self.request.user == post.author:
+#             return True
+#         else:
+#             return False
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = post
-    success_url = '/'
+# class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+#     model = post
+#     success_url = '/'
 
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        else:
-            return False
+#     def test_func(self):
+#         post = self.get_object()
+#         if self.request.user == post.author:
+#             return True
+#         else:
+#             return False
 
 
 def index(request):
-    mitaa_zote = Home.objects.all()
-    return render(request, 'neighbourapp/index.html', {'all_hoods':mitaa_zote})
+    all_hoods = Home.objects.all()
+    return render(request, 'neighbourapp/index.html', {'all_hoods':all_hoods})
 
 def add_hood(request):
     if request.method == 'POST':
@@ -67,17 +66,17 @@ def add_hood(request):
             hood = form.save(commit=False)
             hood.admin = request.user.profile
             hood.save()
-            return redirect('index')
+            return redirect('all_hoods')
     else:
         form = HomeForm()
     return render(request, 'create_hood.html', {'form': form})
 
 @login_required(login_url='login')
-def home(request):
-    hoods = Home.objects.all()
-    hoods = hoods[::-1]
+def hoods(request):
+    all_hoods = Home.objects.all()
+    all_hoods = all_hoods[::-1]
     params = {
-        'hoods': hoods,
+        'all_hoods': all_hoods,
     }
     return render(request, 'all_hoods.html', params)
 
@@ -85,7 +84,7 @@ def home(request):
 def create_post(request, hood_id):
     hood = Home.objects.get(id=hood_id)
     if request.method == 'POST':
-        form = postForm(request.POST)
+        form = postForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.hood = hood
@@ -98,15 +97,17 @@ def create_post(request, hood_id):
 
 
 
+
 def hood(request, hood_id):
     hood = Home.objects.get(id=hood_id)
-    business = Business.objects.filter(id=hood_id)
-    posts = post.objects.filter(id=hood_id)
+    business = Business.objects.filter(home=hood).all()
+    print(business)
+    posts = post.objects.filter(hood=hood).all()
     if request.method == 'POST':
         form = BusinessForm(request.POST)
         if form.is_valid():
             b_form = form.save(commit=False)
-            b_form.Home = hood
+            b_form.home = hood
             b_form.user = request.user
             b_form.save()
             return redirect('hood', hood.id)

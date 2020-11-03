@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mb-4">
-    <form action="" method="post" novalidate>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-sm btn-info ">create Post</button>

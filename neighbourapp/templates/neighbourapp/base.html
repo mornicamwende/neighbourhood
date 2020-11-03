@@ -6,9 +6,9 @@
 <head>
     <meta charset="UTF-8">
     {% if title %}
-    <title>Mtaa Yangu - {{title}}</title>
+    <title>Home Kwetu- {{title}}</title>
     {% else %}
-    <title>Mtaa Yangu </title>
+    <title>Home Kwetu </title>
     {% endif %}
 
     {% block styles %}
@@ -27,31 +27,23 @@
 </head>
 
 <body>
-  
 
-
-        {% include 'neighbourapp/navbar.html' %}
-        {% block content %}
-
-        {% endblock %}
-
-    
-    
-   
-
-  {% block scripts %}
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-        {% endblock %}
+    {% include 'neighbourapp/navbar.html' %}
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    {% endblock %}
 
 </body>
 

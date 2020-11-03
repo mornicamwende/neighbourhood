@@ -2,54 +2,37 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
-
 <div class="container-fluid" style="background-image: url(https://cdn.pixabay.com/photo/2020/09/14/21/09/houses-5572171_960_720.png);  background-repeat:no-repeat; height:100vh; width:100%; background-size: cover;">
-    <h2>Select Your Neighbourhood</h2>
-
-    <a href="{% url 'add_hood' %}" class="btn btn-md btn-secondary mb-2"> New Hood</a>
+    <h1 style="text-align:center; color:white;">Karibu Home kwetu Watch</h1>
+    </div>
+    <div>
+        <h2 >Join a new neighbourhood</h2>
+        <a href="{% url 'add_hood' %}" class="btn btn-md btn-dark mb-2" style="text-align:center;" > New Hood</a>
+        </div>
     <div class="row">
-
-        <div class="col-md-4 bg" >
-            
-
-                      {% for home in hoods %}
-                        <a href="{% url 'hood' home.id %}" class='btn btn-secondary btn-md'>{{ home.name}}</a> <br>
-                        {% endfor %}
+        <div class="col-md-4">
+                <h2 style="text-align:center;">Select Your Neighbourhood</h2>
+                {% for home in all_hoods %}
+                    <a href="{% url 'hood' home.id %}" class='btn btn-secondary btn-md' style="text-align:center;  float: center;" >{{ home.name}}</a> <br>
+                {% endfor %}
         </div>
-{% comment %} <div class="col-md-8">
-        <h2>Our neighbourhoods at a glance.Join and enjoy the fun</h2>
-        <div class="table-responsive">
-            <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                <thead class="black white-text">
-                    <tr class="font-weight-bold">
-
-                        <th class="th-md">Location
-                        </th>
-                        <th class="th-md">Neighborhood
-                        </th>
-                        <th class="th-md">description
-                        </th>
-                        <th class="th-md">Health-Department <br>Contacts
-                        </th>
-                        <th class="th-md">Police <br>Contacts
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for hood in hoods %}
-                    <tr>
-                        <td>{{ hood.location}}</td>
-                        <td>{{ hood.name}}</td>
-                        <td>{{ hood.description}}</td>
-                        <td>{{ hood.health}}</td>
-                        <td>{{ hood.police}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div> {% endcomment %}
+        <div class="col-md-8">
+            <div class="row">
+                {% for hood in all_hoods %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <h2 class="card-header">{{ hood.name}}</h2>
+                                <div class="card-body">
+                                    {{ hood.description}}
+                                    {{ hood.location}}
+                                   <p>health stations {{ hood.health}} </p>
+                                    <p>police stations{{ hood.police}}</p>
+                                </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div> 
 
     </div>
 </div>

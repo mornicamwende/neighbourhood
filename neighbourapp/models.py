@@ -34,7 +34,7 @@ class post(models.Model):
     caption = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='posts/')
+    image = models.ImageField(upload_to='media/')
     hood = models.ForeignKey(Home, on_delete=models.CASCADE,)
 
 
@@ -51,7 +51,7 @@ class Business(models.Model):
     description = models.TextField(blank=True)
     home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='business')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
-    business_image = models.ImageField(upload_to='images/', default='default2.jpg')
+    business_image = models.ImageField(upload_to='media/', default='default.jpg')
 
     def __str__(self):
         return f'{self.name} Business'

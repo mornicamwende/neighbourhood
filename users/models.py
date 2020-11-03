@@ -8,7 +8,7 @@ from neighbourapp.models import Home
 # Create your models here..
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=250, default="welome to my hood", blank=True)
+    bio = models.CharField(max_length=250, default="welome to your hood", blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     home = models.ForeignKey(Home,on_delete=models.CASCADE, blank=True, null=True)
 
