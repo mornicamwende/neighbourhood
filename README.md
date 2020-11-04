@@ -11,7 +11,8 @@ Mornica Mwende
 
 
 ## SetUp/Installations
-1. Download the zip file of the project or Clone the git hub repository https://github.com/mornicamwende/neighbourhood
+1. Download the zip file of the project or Clone the git hub repository 
+https://github.com/mornicamwende/neighbourhood
 
 2. Install virtual environment and activate it  
 
