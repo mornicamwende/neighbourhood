@@ -4,8 +4,8 @@
 Mornica Mwende
 
 ## Description
-    Welcome to Home Kwetu application. This application allows users to be in the loop about everything happening in their neighborhood. The user is able to access diffrent information about a given neighbourhood.
-    The user is able to login create theit profile. create a new hood join their hood, see the various businesses and posts in their hoods.
+Welcome to Home Kwetu application. This application allows users to be in the loop about everything happening in their neighborhood. The user is able to access diffrent information about a given neighbourhood.
+The user is able to login create theit profile. create a new hood join their hood, see the various businesses and posts in their hoods.
 
 ## Live Link 
 
